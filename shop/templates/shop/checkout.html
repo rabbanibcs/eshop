@@ -1,0 +1,61 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+     <div class="row">
+		<div class="col-lg-6">
+			<div class="box-element" id="form-wrapper">
+				<form action="" method="POST" id="form">
+				{% csrf_token %}
+
+					<div id="shipping-info">
+
+						<p><strong>Shipping Information:</p></strong>
+						<hr>
+						<div class="form-field">
+							<input class="form-control" type="text" name="address" placeholder="Address..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="state" placeholder="State..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="city" placeholder="City..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+						</div>
+						<div class="form-field">
+							<input  class="form-control" type="text" name="order-id" value="{{order.id}}" placeholder="{{order.id}}">
+						</div>
+					</div>
+
+					<hr>
+					<input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+				</form>
+			</div>
+
+			<br>
+			<div class="box-element hidden" id="payment-info">
+				<small>Paypal Options</small>
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="box-element">
+				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+				<hr>
+				<h3>Order Summary</h3>
+				<hr>
+				{% for item in items %}
+				<div class="cart-row">
+					<div style="flex:2"><img class="row-image" src="{{item.product.image_url}}"></div>
+					<div style="flex:2"><p>{{item.product.name}}</p></div>
+					<div style="flex:1"><p>${{ item.product.price|floatformat:2 }}</p></div>
+					<div style="flex:1"><p>x{{ item.quantity }}</p></div>
+				</div>
+				{% endfor %}
+				<h5>Items: {{ order.total_items|default:'0'}}</h5>
+				<h5>Total: ${{ order.cart_total_price|floatformat:2|default:'0' }}</h5>
+			</div>
+		</div>
+	</div>
+{% endblock content %}

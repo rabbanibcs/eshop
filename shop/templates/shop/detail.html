@@ -1,0 +1,30 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content%}
+   <div class="row">
+       <div class="col-lg-4">
+            <div class="box-element product ">
+                <img class="thumbnail" src="{{ product.image_url }}" alt="">
+                <h6><strong>{{ product.name }}</strong></h6>
+				<hr>
+                <form method="POST">
+                     {% csrf_token %}
+                    <input class="btn btn-outline-secondary add-btn" type="submit" value="Add to Cart">
+                    <h4 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}</strong></h4>
+				</form>
+
+            {% if messages %}
+              {% for  message in messages %}
+                 <h6> {{message}}</h6>
+              {% endfor %}
+            {% endif %}
+
+
+
+            </div>
+       </div>
+
+   </div>
+{% endblock content %}
+
+<!--  <input hidden name="id" type="text" value="{{ product.id }}">-->
