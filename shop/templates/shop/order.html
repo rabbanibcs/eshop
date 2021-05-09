@@ -1,0 +1,53 @@
+{% load filters %}
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Order</title>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+  <div class="col-2"></div>
+  <div class="col-8">
+
+order completed.
+
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" >Sl.<br>No.</th>
+          <th scope="col" >Item</th>
+          <th scope="col">Unit Price</th>
+          <th scope="col">QTY</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for product in cart %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{product.product.name}}</td>
+          <td>${{product.product.price}}</td>
+          <td>{{product.quantity}}</td>
+          <td>${{product.product|total_price:product.quantity}}</td>
+        </tr>
+      {% endfor %}
+        <tr>
+          <td colspan="4">Amount in words: <strong>{{cart|price|num2word|capfirst}} only.</strong></td>
+            <td>$<strong>{{cart|price}}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+</div>
+</div>
+</body>
+</html>
