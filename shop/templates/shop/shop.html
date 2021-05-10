@@ -8,25 +8,34 @@
          {%if category%}
             <form method="POST">
                 {%csrf_token%}
-                <select name="category" >
+                <select class="custom-select" name="category" >
                 {% for category in category %}
                 <option value="{{category.id}}">{{category.name}}</option>
                 {% endfor %}
                 </select>
-                <button>Search</button>
+                <button class="btn btn-outline-secondary" >Search</button>
             </form>
             {%else%}
 
             <form method="POST">
                 {%csrf_token%}
-                <select name="product_id" >
+                <select class="custom-select"  name="product_id" >
                 {% for product in products %}
                 <option value="{{product.id}}">{{product.name}}</option>
                 {% endfor %}
                 </select>
-                <button>Search</button>
+                <button class="btn btn-outline-secondary">Search</button>
             </form>
             {%endif%}
+            {%if stock%}
+            <form method="POST">
+                {%csrf_token%}
+                <input class="custom-select" name="quantity" type="number">
+                <input  class="custom-select" name="id" value="{{id}}" type="number">
+                <button class="btn btn-outline-secondary">add to cart</button>
+            </form>
+            <h4>We have {{stock}} in stock</h4>
+             {%endif%}
         </div>
 
 

@@ -1,17 +1,14 @@
-{% extends 'store/main.html' %}{% load static %}
+{% extends 'shop/main.html' %}{% load static %}
 {% block content%}
 <div class="row">
 	<div class="col-lg-12">
 		<div class="box-element">
-		 <a  class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
-			<br>
 			<br>
 			<table class="table">
 				<tr>
 					<th><h5>Items: <strong>{{order.total_items|default:'0'}}</strong></h5></th>
 					<th><h5>Total:<strong> ${{order.cart_total_price|floatformat:2|default:'0' }}</strong></h5></th>
 					<th>
-						<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
 					</th>
 				</tr>
 			</table>
@@ -26,39 +23,29 @@
 				<div style="flex:1"><strong>Quantity</strong></div>
 				<div style="flex:1"><strong>Total</strong></div>
 			</div>
-			{% for item in items %}
+			{% for product,quantity in products.items %}
 			<div class="cart-row">
-				<div style="flex:2"><img class="row-image" src="{{ item.product.image_url }}"></div>
-				<div style="flex:2"><p>{{ item.product.name }}</p></div>
-				<div style="flex:1"><p>${{ item.product.price|floatformat:2 }}</p></div>
+				<div style="flex:2"><img class="row-image" src="{{ product.image.url }}"></div>
+				<div style="flex:2"><p>{{ product.name }}</p></div>
+				<div style="flex:1"><p>${{ product.price }}</p></div>
 				<div style="flex:1">
 					<div class="row">
 						<div class="col-1 btn ">
-							<form action="" method="POST">
-								{% csrf_token %}
 
-								<input hidden type="text" name="less" value={{item.id}}>
-								<input type="submit" value=" - ">
-							</form>
 
 						</div>
 						<div class="center col-2 ml-3 mt-2">
-							<strong>{{ item.quantity }}</strong>
+							<strong>{{ quantity }}</strong>
 						</div>
 						<div class="col-1 btn">
-							<form action="" method="POST">
-								{% csrf_token %}
-								<input hidden name="more" type="text" value={{ item.id }}>
-<!--								value="" provides string-->
-								<input type="submit" value=" + ">
-							</form>
+
 						</div>
 
 					</div>
 
 				</div>
 
-				<div style="flex:1"><p>${{item.total_price|floatformat:2}}</p></div>
+				<div style="flex:1"><p>$</p></div>
 			</div>
 			{% endfor %}
 
@@ -67,9 +54,3 @@
 </div>
 {% endblock content%}
 
-
-<!--					<p class="quantity">{{ item.quantity }}</p>-->
-<!--					<div class="quantity">-->
-<!--						<img class="chg-quantity" src="{% static  'images/arrow-up.png' %}">-->
-<!--						<img class="chg-quantity" src="{% static  'images/arrow-down.png' %}">-->
-<!--					</div>-->

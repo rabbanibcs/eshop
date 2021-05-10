@@ -5,7 +5,6 @@ from django.views import View
 from shop.models import Product, Category, Customer, Cart, Order
 
 
-
 class ProductsView(View):
 
     def get(self, request):
@@ -15,11 +14,10 @@ class ProductsView(View):
             if products:
                 pass
             else:
-                messages.warning(request,'No product found.')
+                messages.warning(request, 'No product found.')
 
         else:
             products = Product.objects.all()
-
 
         context = {'products': products, 'category': category}
         return render(request, 'shop/shop.html', context)
@@ -29,8 +27,8 @@ class ProductsView(View):
         if request.POST.get('category'):
             category_id = request.POST.get('category')
             products = Product.objects.filter(category_id=category_id)
-            product_id = Product.objects.filter(category_id=category_id)
-            context = {'product_id': product_id, 'products': products}
+            # product_id = Product.objects.filter(category_id=category_id)
+            context = {'products': products}
             print('category_id', category_id)
             return render(request, 'shop/shop.html', context)
         if request.POST.get('product_id'):
@@ -43,9 +41,12 @@ class ProductsView(View):
             return render(request, 'shop/shop.html', context)
 
         if request.POST.get('quantity'):
-            product_id = request.POST.get('product')
+            product_id = request.POST.get('id')
             quantity = request.POST.get('quantity')
             stock = Product.objects.get(pk=product_id).stock
+
+            print('quantity', quantity)
+            print('product_id', product_id)
 
             if int(quantity) > stock:
                 messages.error(request, 'Sorry, Quantity is more than Stock')
@@ -56,8 +57,6 @@ class ProductsView(View):
             products = Product.objects.all()
             context = {'category': category, 'products': products}
 
-            print('quantity', quantity)
-            print('product_id', product_id)
             return render(request, 'shop/shop.html', context)
 
         if request.POST.get('id'):
@@ -83,10 +82,7 @@ class ProductsView(View):
         else:
             cart = {pk: 1}
         print(cart)
-        # items = ProductsView.total_cart_items(cart)
-        # print(items)
         request.session['cart'] = cart
-        # request.session['items'] = items
         messages.success(request, 'Added to the Cart. ')
 
 
@@ -131,8 +127,8 @@ class OrderView(View):
 
             customer = Customer(name=name, phone=phone, email=email)
             customer.save()
-            qrcode_path=customer.qrcode_create()
-            customer.qrcode=qrcode_path
+            qrcode_path = customer.qrcode_create()
+            customer.qrcode = qrcode_path
             customer.save()
             order = Order(customer=customer, )
             order.save()
@@ -143,65 +139,13 @@ class OrderView(View):
                     cart.save()
                 del request.session['cart']
                 request.session.save()
-        cart=order.cart_set.all()
-        context={'cart':cart,'order':order}
-        return render(request, 'shop/order.html',context)
+        cart = order.cart_set.all()
+        context = {'cart': cart, 'order': order}
+        return render(request, 'shop/order.html', context)
 
     def get(self, request):
-        order=Order.objects.get(pk=15)
-        cart=order.cart_set.all()
-        # word=num2words(987)
-
-        # cart['word']=word
+        order = Order.objects.get(pk=15)
+        cart = order.cart_set.all()
         print(cart)
-
-        context={'cart':cart,'order':order}
-        return render(request, 'shop/order.html',context)
-
-    # def post(self, request):
-    #     if request.user.is_authenticated:
-    #         less = request.POST.get('less')
-    #         if less:
-    #             item = CartItem.objects.get(pk=less)
-    #             if item.quantity >= 1:
-    #                 item.quantity -= 1
-    #                 item.save()
-    #                 if item.quantity == 0:
-    #                     item.delete()
-    #         else:
-    #             item = CartItem.objects.get(pk=request.POST['more'])
-    #             item.quantity += 1
-    #             item.save()
-    #         return redirect('cart')
-
-#
-# class Index(View):
-#     def get(self, request):
-#         category = Category.objects.all()
-#         context = {'categorys': category}
-#
-#         return render(request, 'shop/shop2.html', context)
-#
-#     def post(self, request):
-#
-#         if request.POST.get('category'):
-#             category_id = request.POST.get('category')
-#             products = Product.objects.filter(category_id=category_id)
-#             context = {'products': products}
-#             print(category_id)
-#
-#         if request.POST.get('product'):
-#             product_id = request.POST.get('product')
-#             product = Product.objects.get(pk=product_id)
-#             stock = product.stock
-#             context = {'stock': stock}
-#             print(product_id)
-#
-#         if request.POST.get('quantity'):
-#             quantity = request.POST.get('quantity')
-#             category = Category.objects.all()
-#             context = {'categorys': category}
-#
-#             print(quantity)
-#
-#         return render(request, 'shop/shop2.html', context)
+        context = {'cart': cart, 'order': order}
+        return render(request, 'shop/order.html', context)
