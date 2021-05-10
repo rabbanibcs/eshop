@@ -1,4 +1,5 @@
 {% load static %}
+{% load filters %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
 
@@ -23,6 +24,7 @@
                     <a href="{% url 'cart' %}">
                         <img  id="cart-icon" src="{% static 'cart.png' %}">
                     </a>
+                    <p id="cart-total">{{request.session.cart|total_cart_items|default:0}}</p>
 
             </div>
       </div>
