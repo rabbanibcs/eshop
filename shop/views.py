@@ -59,13 +59,13 @@ class ProductsView(View):
 
             return render(request, 'shop/shop.html', context)
 
-        # if request.POST.get('id'):
-        #     product_id = request.POST.get('id')
-        #
-        #     print(product_id)
-        #     self.add_to_cart(request, product_id)
-        #
-        #     return redirect('shop')
+        if request.POST.get('product'):
+            product_id = request.POST.get('product')
+
+            print(product_id)
+            self.add_to_cart(request, product_id)
+
+            return redirect('shop')
 
     @staticmethod
     def add_to_cart(request, product_id, quantity='1'):
