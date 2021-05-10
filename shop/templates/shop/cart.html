@@ -31,6 +31,41 @@
 			</div>
 			{% endfor %}
 
+
+
+						<!-- Button trigger modal -->
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+			  Complete Order
+			</button>
+
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Info...</h5>
+
+				  </div>
+				  <div class="modal-body">
+
+					  <form method="post">{%csrf_token%}
+						  <input class="form-control" name="name" placeholder="Name..." type="text"><hr>
+						  <input class="form-control" name="phone" placeholder="Phone..." type="text"><hr>
+						  <input class="form-control" name="email" placeholder="Email..." type="text">
+					  </form>
+					  
+					  
+					  
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Confirm</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+
 		</div>
 	</div>
 </div>
