@@ -30,12 +30,19 @@
             {%if stock%}
             <form method="POST">
                 {%csrf_token%}
-                <input class="custom-select" name="quantity" type="number">
-                <input  class="custom-select" name="id" value="{{id}}" type="number">
+                <input class="custom-select" name="quantity" placeholder="Quantity.." type="number">
+                <input hidden class="custom-select" name="id" value="{{id}}" type="number">
                 <button class="btn btn-outline-secondary">add to cart</button>
             </form>
             <h4>We have {{stock}} in stock</h4>
+
              {%endif%}
+
+             {% if messages %}
+              {% for  message in messages %}
+                 <h6> {{message}}</h6>
+              {% endfor %}
+            {% endif %}
         </div>
 
 
