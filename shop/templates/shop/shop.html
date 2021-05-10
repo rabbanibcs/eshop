@@ -5,7 +5,9 @@
    <div class="row">
 
         <div class="col-lg-3">
-            <form method="GET">
+         {%if category%}
+            <form method="POST">
+                {%csrf_token%}
                 <select name="category" >
                 {% for category in category %}
                 <option value="{{category.id}}">{{category.name}}</option>
@@ -13,6 +15,18 @@
                 </select>
                 <button>Search</button>
             </form>
+            {%else%}
+
+            <form method="POST">
+                {%csrf_token%}
+                <select name="product_id" >
+                {% for product in products %}
+                <option value="{{product.id}}">{{product.name}}</option>
+                {% endfor %}
+                </select>
+                <button>Search</button>
+            </form>
+            {%endif%}
         </div>
 
 
