@@ -54,7 +54,11 @@
                         <img  class="thumbnail"  src="{{ product.image.url }}" alt="">
                         <h6><strong>{{ product.name }}</strong></h6>
                         <hr>
-                        <a class="btn btn-outline-success" href="#">Add to cart</a>
+                        <form method="post">{%csrf_token%}
+                            <input hidden name="product" value={{product.id}} type="text">
+                            <button class="btn btn-outline-success" >Add to cart</button>
+                        </form>
+
                         <h4 style="display: inline-block; float: right"><strong>${{ product.price}}</strong></h4>
                     </div>
                </div>
