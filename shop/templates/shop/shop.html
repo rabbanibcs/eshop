@@ -3,7 +3,6 @@
 {% block content%}
 
    <div class="row">
-
         <div class="col-lg-3">
             {%if stock%}
             <h4> Enter quantity...</h4>
@@ -47,8 +46,6 @@
               {% endfor %}
             {% endif %}
         </div>
-
-
         <div class="col-lg-9">
                <div class="row">
                  {% for product in products %}
@@ -62,13 +59,10 @@
                             <button class="btn btn-outline-success" >Add to cart</button>
                             <strong>${{ product.price}}</strong>
                         </form>
-
-
                     </div>
                </div>
                {% endfor %}
             </div>
         </div>
-
    </div>
 {% endblock content %}
