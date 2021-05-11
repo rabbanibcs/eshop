@@ -10,7 +10,8 @@ class ProductsView(View):
     def get(self, request):
         category = Category.objects.all()
         if request.GET.get('query'):
-            products = Product.objects.filter(name=request.GET.get('query'))
+            query=request.GET.get('query')
+            products = Product.objects.filter(name__startswith=query)
             if products:
                 pass
             else:
@@ -149,8 +150,10 @@ class OrderView(View):
         return render(request, 'shop/order.html', context)
 
     def get(self, request):
-        order = Order.objects.get(pk=15)
+
+        order = Order.objects.get(pk=20)
         cart = order.cart_set.all()
         print(cart)
         context = {'cart': cart, 'order': order}
         return render(request, 'shop/order.html', context)
+
