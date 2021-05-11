@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/',ProductsView.as_view(),name='shop'),
     path('order/', OrderView.as_view(),),
+    path('order/<int:pk>', OrderView.as_view(), ),
     path('order/download/',order_pdf_view, ),
     path('cart/', CartView.as_view(), name='cart'),
 

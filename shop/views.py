@@ -142,8 +142,8 @@ class OrderView(View):
         context = {'cart': cart, 'order': order}
         return render(request, 'shop/order.html', context)
 
-    def get(self, request):
-        order = Order.objects.get(pk=24)
+    def get(self, request,pk):
+        order = Order.objects.get(pk=pk)
         cart = order.cart_set.all()
         context = {'cart': cart, 'order': order}
         return render(request, 'shop/order.html', context)
@@ -159,39 +159,8 @@ def order_pdf_view(request):
     html = template.render(context)
 
     pisa_status = pisa.CreatePDF(
-        html, dest=response, link_callback=link_callback)
+        html, dest=response)
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
-
-def link_callback(uri, rel):
-    """
-    Convert HTML URIs to absolute system paths so xhtml2pdf can access those
-    resources
-    """
-    result = finders.find(uri)
-    if result:
-        if not isinstance(result, (list, tuple)):
-            result = [result]
-        result = list(os.path.realpath(path) for path in result)
-        path = result[0]
-    else:
-        sUrl = settings.STATIC_URL  # Typically /static/
-        sRoot = settings.STATIC_ROOT  # Typically /home/userX/project_static/
-        mUrl = settings.MEDIA_URL  # Typically /media/
-        mRoot = settings.MEDIA_ROOT  # Typically /home/userX/project_static/media/
-
-        if uri.startswith(mUrl):
-            path = os.path.join(mRoot, uri.replace(mUrl, ""))
-        elif uri.startswith(sUrl):
-            path = os.path.join(sRoot, uri.replace(sUrl, ""))
-        else:
-            return uri
-
-    # make sure that file exists
-    if not os.path.isfile(path):
-        raise Exception(
-            'media URI must start with %s or %s' % (sUrl, mUrl)
-        )
-    return path
