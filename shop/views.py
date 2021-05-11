@@ -24,6 +24,7 @@ class ProductsView(View):
 
     def post(self, request):
 
+        # search for category
         if request.POST.get('category'):
             category_id = request.POST.get('category')
             products = Product.objects.filter(category_id=category_id)
@@ -31,6 +32,8 @@ class ProductsView(View):
             context = {'products': products}
             print('category_id', category_id)
             return render(request, 'shop/shop.html', context)
+
+        # search for products the given category
         if request.POST.get('product_id'):
             product_id = request.POST.get('product_id')
             print('product_id', product_id)
@@ -40,6 +43,7 @@ class ProductsView(View):
             context = {'stock': stock, 'products': product, 'id': product_id}
             return render(request, 'shop/shop.html', context)
 
+        # input quantity from user
         if request.POST.get('quantity'):
             product_id = request.POST.get('id')
             quantity = request.POST.get('quantity')
@@ -66,6 +70,7 @@ class ProductsView(View):
             self.add_to_cart(request, product_id)
 
             return redirect('shop')
+
 
     @staticmethod
     def add_to_cart(request, product_id, quantity='1'):
