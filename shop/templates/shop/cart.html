@@ -8,7 +8,7 @@
 
 		<br>
 		<div class="box-element">
-			<div class="cart-row">
+			<div class="row">
 				<div class="col-2"></div>
 				<div class="col-2"><strong>Item</strong></div>
 				<div class="col-2"><strong>Price</strong></div>
@@ -16,13 +16,13 @@
 				<div class="col-2"><strong>Total</strong></div>
 			</div>
 			{% for product,quantity in products.items %}
-			<div class="cart-row">
-				<div class="col-2"><img class="row-image" src="{{ product.image.url }}"></div>
-				<div class="col-2"><p>{{ product.name }}</p></div>
-				<div class="col-2"><p>${{ product.price }}</p></div>
-				<div class="col-2"><strong>{{ quantity }}</strong></div>
-				<div class="col-2"><p>${{product|total_price:quantity }}</p></div>
-				<div class="col-2">
+			<div class="row">
+				<div class="col-2"><img width="80" height="80" class="row-image" src="{{ product.image.url }}"></div>
+				<div class="col-2 mt-4"><p>{{ product.name }}</p></div>
+				<div class="col-2 mt-4"><p>${{ product.price }}</p></div>
+				<div class="col-2 mt-4"><strong>{{ quantity }}</strong></div>
+				<div class="col-2 mt-4"><p>${{product|total_price:quantity }}</p></div>
+				<div class="col-2 mt-4">
 					<form method="post">{%csrf_token%}
 						<input hidden name="product" value="{{product.id}}" type="text">
 						<button class="btn btn-info">Remove</button>
@@ -31,13 +31,15 @@
 			</div>
 			{% endfor %}
 
-
-
+<hr>
+			{% if products %}
 						<!-- Button trigger modal -->
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 			  Complete Order
 			</button>
-
+			{% else %}
+			<h4 align="center">Empty Cart</h4>
+			{% endif %}
 			<!-- Modal -->
 			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
@@ -58,10 +60,6 @@
 							<button type="submit" class="btn btn-primary">Confirm</button>
 						  </div>
 					  </form>
-					  
-					  
-					  
-
 				</div>
 			  </div>
 			</div>

@@ -14,13 +14,17 @@
 <body>
 <div class="container">
   <div class="row">
-  <div class="col-2"></div>
+  <div class="col-2">
+    <form action="download/" method="">
+      <button type="submit">Download</button>
+    </form>
+  </div>
   <div class="col-8">
 
+<br>
+      <img width="200" height="200" src="http://127.0.0.1:8000{{ order.customer.qrcode.url }}" alt="">
 
-      <img src="{{ order.customer.qrcode.url }}" alt="">
-
-    <table class="table table-bordered">
+    <table class="table table-bordered" border="1">
       <thead>
         <tr>
           <th scope="col" >Sl.<br>No.</th>
@@ -33,16 +37,16 @@
       <tbody>
       {% for product in cart %}
         <tr>
-          <th scope="row">{{ forloop.counter }}</th>
-          <td>{{product.product.name}}</td>
-          <td>${{product.product.price}}</td>
-          <td>{{product.quantity}}</td>
-          <td>${{product.product|total_price:product.quantity}}</td>
+          <th scope="row"><br>{{ forloop.counter }}</th>
+          <td align="center">{{product.product.name}}</td>
+          <td align="center">${{product.product.price}}</td>
+          <td align="center">{{product.quantity}}</td>
+          <td align="center">${{product.product|total_price:product.quantity}}</td>
         </tr>
       {% endfor %}
         <tr>
-          <td colspan="4">Amount in words: <strong>{{cart|price|num2word|capfirst}} only.</strong></td>
-            <td>$<strong>{{cart|price}}</strong></td>
+          <td colspan="4"><br> Amount in words: <strong>{{cart|price|num2word|capfirst}} only.</strong></td>
+            <td align="center">$<strong>{{cart|price}}</strong></td>
         </tr>
       </tbody>
     </table>

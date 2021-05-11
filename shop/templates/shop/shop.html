@@ -5,8 +5,8 @@
    <div class="row">
         <div class="col-lg-3">
             {%if stock%}
-            <h4> Enter quantity...</h4>
-            <h4>We have {{stock}} in stock</h4>
+            <h5> Enter quantity...</h5>
+            <h5>We have {{stock}} in stock</h5>
             <form method="POST">
                 {%csrf_token%}
                 <input class="custom-select" name="quantity" placeholder="Quantity.." type="number">
@@ -35,7 +35,7 @@
                 <option value="{{product.id}}">{{product.name}}</option>
                 {% endfor %}
                 </select>
-                <button class="btn btn-outline-secondary">Search</button>
+                <button class="btn btn-outline-secondary">Submit</button>
             </form>
             {%endif%}
             {%endif%}
@@ -51,7 +51,7 @@
                  {% for product in products %}
                <div class="col-lg-4">
                     <div class="box-element product ">
-                        <img  class="thumbnail"  src="{{ product.image.url }}" alt="">
+                        <img  width="250" height="250" src="{{ product.image.url }}" alt="">
                         <h6><strong>{{ product.name }}</strong></h6>
                         <hr>
                         <form method="post" >{%csrf_token%}
