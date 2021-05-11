@@ -5,7 +5,19 @@
    <div class="row">
 
         <div class="col-lg-3">
+            {%if stock%}
+            <h4> Enter quantity...</h4>
+            <h4>We have {{stock}} in stock</h4>
+            <form method="POST">
+                {%csrf_token%}
+                <input class="custom-select" name="quantity" placeholder="Quantity.." type="number">
+                <input hidden class="custom-select" name="id" value="{{id}}" type="number">
+                <button class="btn btn-outline-secondary">add to cart</button>
+            </form>
+
+             {%else%}
          {%if category%}
+            <h4> Select a category...</h4>
             <form method="POST">
                 {%csrf_token%}
                 <select class="custom-select" name="category" >
@@ -13,10 +25,10 @@
                 <option value="{{category.id}}">{{category.name}}</option>
                 {% endfor %}
                 </select>
-                <button class="btn btn-outline-secondary" >Search</button>
+                <button class="btn btn-outline-secondary" >Submit</button>
             </form>
             {%else%}
-
+            <h4> Select a product...</h4>
             <form method="POST">
                 {%csrf_token%}
                 <select class="custom-select"  name="product_id" >
@@ -27,16 +39,7 @@
                 <button class="btn btn-outline-secondary">Search</button>
             </form>
             {%endif%}
-            {%if stock%}
-            <form method="POST">
-                {%csrf_token%}
-                <input class="custom-select" name="quantity" placeholder="Quantity.." type="number">
-                <input hidden class="custom-select" name="id" value="{{id}}" type="number">
-                <button class="btn btn-outline-secondary">add to cart</button>
-            </form>
-            <h4>We have {{stock}} in stock</h4>
-
-             {%endif%}
+            {%endif%}
 
              {% if messages %}
               {% for  message in messages %}
@@ -54,12 +57,13 @@
                         <img  class="thumbnail"  src="{{ product.image.url }}" alt="">
                         <h6><strong>{{ product.name }}</strong></h6>
                         <hr>
-                        <form method="post">{%csrf_token%}
+                        <form method="post" >{%csrf_token%}
                             <input hidden name="product" value={{product.id}} type="text">
                             <button class="btn btn-outline-success" >Add to cart</button>
+                            <strong>${{ product.price}}</strong>
                         </form>
 
-                        <h4 style="display: inline-block; float: right"><strong>${{ product.price}}</strong></h4>
+
                     </div>
                </div>
                {% endfor %}
