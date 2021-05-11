@@ -48,19 +48,20 @@
 				  </div>
 				  <div class="modal-body">
 
-					  <form method="post">{%csrf_token%}
+					  <form method="post" action="/order/">{%csrf_token%}
 						  <input class="form-control" name="name" placeholder="Name..." type="text"><hr>
 						  <input class="form-control" name="phone" placeholder="Phone..." type="text"><hr>
 						  <input class="form-control" name="email" placeholder="Email..." type="text">
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Confirm</button>
+						  </div>
 					  </form>
 					  
 					  
 					  
-				  </div>
-				  <div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Confirm</button>
-				  </div>
+
 				</div>
 			  </div>
 			</div>

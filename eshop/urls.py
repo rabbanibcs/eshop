@@ -6,8 +6,9 @@ from shop.views import ProductsView,OrderView,CartView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/',ProductsView.as_view(),name='shop'),
-    path('order/', OrderView.as_view(), name='order'),
+    path('order/', OrderView.as_view(),),
     path('cart/', CartView.as_view(), name='cart'),
+
 
 ]
 if settings.DEBUG:
