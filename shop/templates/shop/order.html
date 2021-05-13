@@ -15,11 +15,13 @@
 <div class="container">
   <div class="row">
   <div class="col-2"><br><br><br>
+<!--    download link-->
     <form action="/download/{{order.id}}" method="post">
       {%csrf_token%}
       <button type="submit">Download Invoice</button>
     </form>
   </div>
+<!--    detail order view-->
   <div class="col-8"><br>
       <img width="200" height="200" src="http://127.0.0.1:8000{{ order.customer.qrcode.url }}" alt="">
     <table class="table table-bordered" border="1">
@@ -48,7 +50,7 @@
         </tr>
       </tbody>
     </table>
-
+<!--order pdf lowload link-->
       <P>Go to this link to download invoice-- http://127.0.0.1:8000/order/{{ order.id }}</P>
     </div>
 

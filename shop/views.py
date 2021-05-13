@@ -114,6 +114,7 @@ class CartView(View):
 
 
 class OrderView(View):
+    #  create customer,order and save cart, create QR code
     def post(self, request):
         if request.POST.get('email'):
             name = request.POST.get('name')
@@ -136,14 +137,14 @@ class OrderView(View):
         cart = order.cart_set.all()
         context = {'cart': cart, 'order': order}
         return render(request, 'shop/order.html', context)
-
+    # view order
     def get(self, request,pk):
         order = Order.objects.get(pk=pk)
         cart = order.cart_set.all()
         context = {'cart': cart, 'order': order}
         return render(request, 'shop/order.html', context)
 
-
+# generate a pdf of Order,
 def order_pdf_view(request,pk):
 
     order = Order.objects.get(pk=pk)
