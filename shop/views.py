@@ -4,11 +4,6 @@ from django.shortcuts import render, redirect
 from django.template.loader import get_template
 from django.views import View
 from xhtml2pdf import pisa
-from django.contrib.staticfiles import finders
-from django.conf import settings
-import os
-
-
 from shop.models import Product, Category, Customer, Cart, Order
 
 
@@ -149,8 +144,9 @@ class OrderView(View):
         return render(request, 'shop/order.html', context)
 
 
-def order_pdf_view(request):
-    order = Order.objects.get(pk=24)
+def order_pdf_view(request,pk):
+
+    order = Order.objects.get(pk=pk)
     cart = order.cart_set.all()
     context = {'cart': cart, 'order': order}
     response = HttpResponse(content_type='application/pdf')

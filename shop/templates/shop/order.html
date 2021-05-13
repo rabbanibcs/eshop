@@ -15,7 +15,8 @@
 <div class="container">
   <div class="row">
   <div class="col-2"><br><br><br>
-    <form action="download/" method="">
+    <form action="/download/{{order.id}}" method="post">
+      {%csrf_token%}
       <button type="submit">Download Invoice</button>
     </form>
   </div>
