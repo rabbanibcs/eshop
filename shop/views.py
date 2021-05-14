@@ -49,9 +49,17 @@ class ProductsView(View):
             product_id = request.POST.get('id')
             quantity = request.POST.get('quantity')
             stock = Product.objects.get(pk=product_id).stock
+            # get quantity if the product product is in the cart.
+            quantity_in_cart = self.quantity_in_cart(request, product_id)
+            quantity = int(quantity) + quantity_in_cart
 
+            # check if quantity is more than stock then add to cart
             if int(quantity) > stock:
-                messages.error(request, 'Sorry, Quantity is more than Stock')
+                if quantity_in_cart:
+                    messages.error(request,
+                                   f'Sorry, Quantity is more than Stock.\n You have already added {quantity_in_cart}')
+                else:
+                    messages.error(request, 'Sorry, Quantity is more than Stock, Try again.')
             else:
                 self.add_to_cart(request, product_id, quantity)
             category = Category.objects.all()
@@ -63,8 +71,30 @@ class ProductsView(View):
         # add to cart from product view
         if request.POST.get('product'):
             product_id = request.POST.get('product')
-            self.add_to_cart(request, product_id)
+            stock = Product.objects.get(pk=product_id).stock
+            # get quantity if the product product is in the cart.
+            quantity = self.quantity_in_cart(request, product_id)
+            # check if quantity is more than stock then add to cart
+            if quantity:
+                if quantity == stock:
+                    messages.error(request, f'Sorry, You have already added {quantity}.\n But we have only {quantity} in '
+                                            f'stock')
+                else:
+                    self.add_to_cart(request, product_id)
+            else:
+                self.add_to_cart(request, product_id)
             return redirect('shop')
+
+    # returns quantity of that product, that is already in cart
+    @staticmethod
+    def quantity_in_cart(request, product_id):
+        pk = product_id
+        cart = request.session.get('cart')
+        if cart:
+            quantity = cart.get(pk)
+            if quantity:
+                return quantity
+        return 0
 
     # add to cart functionality
     @staticmethod
@@ -137,16 +167,17 @@ class OrderView(View):
         cart = order.cart_set.all()
         context = {'cart': cart, 'order': order}
         return render(request, 'shop/order.html', context)
+
     # view order
-    def get(self, request,pk):
+    def get(self, request, pk):
         order = Order.objects.get(pk=pk)
         cart = order.cart_set.all()
         context = {'cart': cart, 'order': order}
         return render(request, 'shop/order.html', context)
 
-# generate a pdf of Order,
-def order_pdf_view(request,pk):
 
+# generate a pdf of Order,
+def order_pdf_view(request, pk):
     order = Order.objects.get(pk=pk)
     cart = order.cart_set.all()
     context = {'cart': cart, 'order': order}
@@ -160,4 +191,3 @@ def order_pdf_view(request,pk):
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
-

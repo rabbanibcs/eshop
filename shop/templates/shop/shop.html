@@ -41,9 +41,11 @@
             {%endif%}
 
              {% if messages %}
+              <div class="alert alert-primary" role="alert">
               {% for  message in messages %}
                  <h6> {{message}}</h6>
               {% endfor %}
+              </div>
             {% endif %}
         </div>
 <!--       show products-->
