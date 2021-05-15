@@ -6,6 +6,7 @@ from shop.views import ProductsView,OrderView,CartView,order_pdf_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/',ProductsView.as_view(),name='shop'),
+    path('',ProductsView.as_view()),
     path('order/', OrderView.as_view(),),
     path('order/<int:pk>', OrderView.as_view() ),
     path('download/<int:pk>',order_pdf_view ),
