@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block title %}<title>Home</title>{% endblock title %}
+
+{% block content %}
+    <!-- Pre Header -->
+
+
+    <!-- Navigation -->
+
+        {% include 'nav.html' %}
+
+
+    <!-- Page Content -->
+
+    <!-- Items Starts Here -->
+    <div class="featured-page">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <div class="section-heading">
+              <div class="line-dec"></div>
+              <h1>Featured Items</h1>
+            </div>
+          </div>
+          <div class="col-md-8 col-sm-12">
+            <div id="filters" class="button-group">
+              <a href={% url 'products' %} class="btn btn-primary" data-filter="*">All Products</a>
+              <a href={% url 'newest_products' %} class="btn btn-primary" data-filter=".new">Newest</a>
+              <a href={% url 'low_price_products' %} class="btn btn-primary" data-filter=".low">Low Price</a>
+              <a href={% url 'high_price_products' %} class="btn btn-primary" data-filter=".high">High Price</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="featured container no-gutter">
+
+        <div class="row posts">
+
+            {% for item in items %}
+                 <div id="1" class="item new col-md-4">
+                  <a href={{item.get_absolute_url}}>
+                    <div class="featured-item">
+                      <img style="max-height: 350px" src={{item.image.url}} alt="">
+                      <h4>{{ item.name }}</h4>
+                      <h6>${{item.price }}
+                      <span class="badge badge-primary">Save ${{ item.discount|floatformat:2 }}</span>
+                      </h6>
+                    </div>
+                  </a>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="page-navigation">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <ul>
+              <li class="current-page"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Featred Page Ends Here -->
+
+
+    <!-- Subscribe Form Starts Here -->
+
+    <!-- Subscribe Form Ends Here -->
+
+
+    
+    <!-- Footer Starts Here -->
+
+    <!-- Footer Ends Here -->
+
+
+    <!-- Sub Footer Starts Here -->
+
+    <!-- Sub Footer Ends Here -->
+
+{% endblock content %}
+
+   

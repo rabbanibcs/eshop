@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load my_tags %}
+
+{% block title %}<title>Cart</title>{% endblock title %}
+
+{% block content %}
+{% include 'nav.html' %}
+
+
+  <main>
+    <div class="container section-heading">
+
+    <div class="table-responsive text-nowrap">
+    <h2>Summary</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item title</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total Item Price</th>
+        </tr>
+        </thead>
+        <tbody>
+    {% for item, qty in cart.items %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+
+            <td><a href='{% url 'single_product' item.slug %}'>{{ item.name }}</a></td>
+            <td>${{ item.price }}</td>
+            <td >
+                <a href={{ item.reduce_cart_url }} class='mr-2'> <span class="material-icons">remove_circle</span></a>
+                <b>
+                {{ qty }}
+
+                </b>
+                <a href="{{ item.add_to_cart_url }}" class='ml-2'><span class="material-icons">add_circle</span></a>
+            </td>
+            <td>
+            ${{ item|total_price:qty}}
+            <span class="badge badge-primary">Saving ${{ item|amount_saved:qty }}</span>
+        
+            <a style='color: red;' href="{{ item.remove_from_cart_url }}">
+            <i class="material-icons">delete</i>
+            </a>
+            </td>
+            
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan='5'>Your cart is empty</td>
+        </tr>
+        
+    {% endfor %}
+        <tr>
+            <td colspan="5">
+            <a class='btn btn-success float-right ' href={% url 'signin' %}>CheckOut</a>
+            <a class='btn btn-primary float-right mr-2' href='/'>Continue Shopping</a>
+            </td>
+        </tr>
+        {% if object.get_total %}
+        <tr>
+            <td colspan="4"><b>Order Total</b></td>
+            <td><b>${{ object.get_total|floatformat:2 }}</b></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+            <a class='btn btn-warning float-right ml-2' href='/checkout/'>Proceed to checkout</a>
+            <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
+            </td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+    </div>
+
+    </div>
+  </main>
+
+    <br>    <br>    <br>
+  
+{% endblock content %}
+

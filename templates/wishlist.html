@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Home</title>{% endblock title %}
+
+{% block content %}
+   {% include 'nav.html' %}
+   <br><br><br>
+   {% for object in objects  %}
+
+       <div class="container mb-3 ">
+         <div class="container d-flex justify-content-between mt-2 pb-3 border-bottom">
+           <div class="col-md-2">
+             <a href="{{object.item.get_absolute_url}}">
+               <img width="100px" src="{{object.item.image.url}}" alt="">
+             </a>
+           </div>
+           <div class="col-md-3"><a href="{{object.item.get_absolute_url}}"><h6>{{object.item.name}} </h6></a></div>
+           <div class="col-md-2">Price:<p class="lead">
+             {% if object.item.discount_price %}
+             <span class="mr-1">
+               <del>${{ object.item.price }}</del>
+             </span>
+             <span>${{ object.item.discount_price }}</span>
+             {% else %}
+             <span>${{ object.item.price }}</span>
+             {% endif %}
+           </p></div>
+           <div class="col-md-3"> 
+             <a href="{{ object.item.add_to_cart_url }}" >
+              <span class="material-icons">add_shopping_cart</span>
+             </a><br>
+             <a href="{{ object.item.remove_from_wishlist_url }}" >
+              <i class="material-icons">delete</i>
+             </a>
+           </div>
+         </div>
+       </div>
+    {%empty%}
+    <div class="container mb-3 ">
+      <div class="container my-5 pb-3 border-bottom">
+       <h4 style="text-align: center;">You do not have any favourite item...</h4> 
+      </div>
+    </div>
+   {% endfor %}
+   
+{% endblock content %}
+
+
+
+
+
+
+
+

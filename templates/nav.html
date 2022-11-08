@@ -1,0 +1,48 @@
+{% load static %}
+{% load my_tags %}
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+          <a class="navbar-brand" href="#"><img src=# alt=""></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href={% url 'index' %}>Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              {% url 'products' as the_url %}
+              <li class="nav-item">
+                <a class="nav-link" href={{ the_url }}>Products</a>
+              </li>
+              <li class="nav-item">
+                {% if user.is_authenticated %}
+                  <a class="nav-link" href={% url 'signout' %}>SignOut</a>
+                {% else %}
+                  <a class="nav-link" href={% url 'signin' %}>SignIn</a>
+                {% endif %}
+              </li>
+              {% if user.is_authenticated  %}
+              <li class="nav-item">
+                <a class="nav-link" href={% url 'wishlist' %}>
+                  <span class='material-icons'style="color: rgb(237, 95, 30);">favorite</span>({{user|total_items_in_wishlist}})</a>
+              </li>
+              {% endif %}
+              <li class="nav-item">
+                <a class="nav-link" href={% url 'cart' %}>
+                  <span class="material-icons"style="color: blue">shopping_cart</span>(
+                    {% if user.is_authenticated %}
+                  {{user|total_items_in_cart}}
+                  {% else %}
+                  {{request|total_items_in_cart_}}
+                  {% endif %}
+                  )</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>

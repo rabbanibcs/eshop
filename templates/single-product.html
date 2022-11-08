@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block title %}<title>{{product.name}}</title>{% endblock title %}
+
+{% block content%}
+
+    <!-- Navigation -->
+      {% include 'nav.html' %}
+
+    <!-- Page Content -->
+    <!-- Single Starts Here -->
+    <div class="single-product">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-heading">
+              <div class="line-dec"></div>
+              <h1>Single Product</h1>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <img class="img-fluid"  src={{ product.image.url }} />
+
+          </div>
+          <div class="col-md-6">
+            <div class="right-content">
+              <h4> {{product.name}}</h4>
+              <h6>$ {{product.price}}</h6>
+              <p> {{product.description}} </p>
+              <span>7 left on stock</span><br>
+                {% if in_cart %}
+                <a href={{ product.remove_from_cart_url }}><span class="material-icons" style="color:red;font-size: 50px;">remove_shopping_cart</span></a>
+
+                {%else %}
+                <a href={{ product.add_to_cart_url }}><span class="material-icons" style="font-size: 50px;">add_shopping_cart</span></a>
+              {% if user.is_authenticated  %}
+              {% if not wished %}
+                  <a href={{ product.add_to_wishlist_url }} ><span class='material-icons'style="color:blue;font-size: 50px;">favorite_border</span></a>
+                  {% else %}
+                  <a  href={{ product.remove_from_wishlist_url }} ><span class='material-icons'style="color:red;font-size: 50px;">favorite</span></a>
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+
+              <div class="down-content">
+                <div class="categories">
+                  <h6>Category: <span><a href="#">{{product.subcategory.category}}</a></span></h6>
+                </div>
+                <div class="share">
+                  <h6>Share: <span><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-linkedin"></i></a><a href="#"><i class="fa fa-twitter"></i></a></span></h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Single Page Ends Here -->
+
+
+    <!-- Similar Starts Here -->
+    <div class="featured-items">
+      <div class="container">
+        <div class="row">
+          {% if like_products %}
+          <div class="col-md-12">
+            <div class="section-heading">
+              <div class="line-dec"></div>
+              <h1>You May Also Like</h1>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="owl-carousel owl-theme">
+
+                {% for lp in like_products %}
+              <a href={{lp.get_absolute_url}}>
+                <div class="featured-item">
+                  <img style="max-height:300px" src={{lp.image.url}} alt="Item 1">
+                  <h4>{{lp.name}}</h4>
+                  <h6>${{lp.price}}</h6>
+                </div>
+              </a>
+                {% endfor %}
+
+            </div>
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+    <!-- Similar Ends Here -->
+
+
+    <!-- Subscribe Form Starts Here -->
+
+    <!-- Subscribe Form Ends Here -->
+
+
+
+    <!-- Footer Starts Here -->
+    <!-- Footer Ends Here -->
+
+
+    <!-- Sub Footer Starts Here -->
+    <!-- Sub Footer Ends Here -->
+
+
+
+
+{% endblock content%}
+
